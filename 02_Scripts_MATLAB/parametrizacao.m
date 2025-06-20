@@ -6,7 +6,7 @@ a = 1.2;        % Distância CG-Eixo Dianteiro (m)
 b = 1.6;        % Distância CG-Eixo Traseiro (m)
 L = a + b;      % Distância entre eixos
 Caf = 80000;    % Rigidez de Deriva Dianteira (N/rad)
-Car = 80000;    % Rigidez de Deriva Traseira (N/rad)
+Car = 120000;    % Rigidez de Deriva Traseira (N/rad)
 vx = 20;        % Velocidade longitudinal constante (m/s)
 
 % Salvar para usar no Simulink
