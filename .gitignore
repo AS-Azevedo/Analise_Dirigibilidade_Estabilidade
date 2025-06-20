@@ -1,52 +1,65 @@
-# Prerequisites
-*.d
+### MATLAB ###
+# Windows default autosave extension
+*.asv
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# OSX / *nix default autosave extension
+*.m~
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# Compiled MEX binaries (all platforms)
+*.mex*
 
-# Precompiled Headers
-*.gch
-*.pch
+# Packaged app and toolbox files
+*.mlappinstall
+*.mltbx
+*.asv
+*.mex*
+*.slic
+*.slx.autosave
+*.slxc
+slprj/
+.Simulink_cache/
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+# Generated helpsearch folders
+helpsearch*/
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
+# Simulink code generation folders
+slprj/
+sccprj/
 
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
+# Matlab code generation folders
+codegen/
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Simulink autosave extension
+*.autosave
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Simulink cache files
+*.slxc
+
+# Octave session info
+octave-workspace
+
+### Windows ###
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
