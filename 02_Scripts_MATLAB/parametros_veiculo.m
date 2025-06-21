@@ -16,10 +16,26 @@ b = 1.7;        % Traseira longa
 L = a + b;      % Distância entre eixos (m)
 g = 9.81;       % Aceleração da gravidade (m/s^2)
 
-% --- Parâmetros dos Pneus (Modelo Linear) ---
-% A maior causa de subesterço: pneus dianteiros "macios" e traseiros "duros"
-Caf = 70000;    % Rigidez de Deriva Dianteira (N/rad) - RELATIVAMENTE BAIXA
-Car = 140000;   % Rigidez de Deriva Traseira (N/rad) - O DOBRO DA DIANTEIRA
+% --- Parâmetros dos Pneus (Fase 2: Modelo Pacejka Simplificado) ---
+
+% Coeficientes da "Magic Formula" para o pneu dianteiro
+PneuDianteiro.B = 10;
+PneuDianteiro.C = 1.9;
+PneuDianteiro.D_mult = 1.0; % Multiplicador para o pico da aderência (D)
+PneuDianteiro.E = 0.97;
+
+% Coeficientes para o pneu traseiro (mesmo tipo de pneu)
+PneuTraseiro.B = 10;
+PneuTraseiro.C = 1.9;
+PneuTraseiro.D_mult = 1.0;
+PneuTraseiro.E = 0.97;
+
+% --- Cálculos Derivados Adicionais ---
+% Cargas verticais estáticas em cada eixo (em Newtons)
+% (Já deve existir no seu script, mas confirme)
+Fz_f_static = m * g * b / L;
+Fz_r_static = m * g * a / L;
+
 
 % --- Salvando os Parâmetros ---
 script_path = fileparts(mfilename('fullpath'));
