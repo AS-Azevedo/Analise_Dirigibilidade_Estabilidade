@@ -53,7 +53,6 @@ A primeira fase do projeto foi concluída e validada com sucesso.
 
 Para verificar a estabilidade fundamental do modelo, uma simulação com entrada degrau no volante (`delta`) foi executada. O gráfico abaixo mostra a resposta da taxa de guinada (`r`) e da velocidade lateral (`vy`). A resposta oscilatória que se estabiliza em um valor de regime permanente confirma o comportamento estável de segunda ordem do sistema, como esperado pela teoria.
 
-> **[NOTA: Substitua o caminho abaixo pela imagem da sua resposta ao degrau]**
 > ![Resposta ao Degrau](03_Resultados/grafico_resposta_degrau.png)
 
 ### 2. Análise de Característica de Dirigibilidade
@@ -62,7 +61,6 @@ Uma ferramenta de análise foi desenvolvida em MATLAB para automatizar a execuç
 
 Após um processo iterativo de ajuste de parâmetros (distribuição de peso, rigidez dos pneus e momento de inércia), o modelo foi configurado para exibir um comportamento **subesterçante**, que é o padrão de segurança para veículos de passeio. O gráfico abaixo demonstra este comportamento, indicado pela queda do ganho em altas velocidades.
 
-> **[NOTA: Substitua o caminho abaixo pela imagem do seu gráfico final subesterçante]**
 > ![Característica Subesterçante](03_Resultados/grafico_final_subestercante.png)
 
 ## 🚀 Como Executar a Simulação
