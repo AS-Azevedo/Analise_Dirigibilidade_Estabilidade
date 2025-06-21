@@ -1,8 +1,7 @@
 # Análise de Dirigibilidade e Estabilidade Veicular Através de Simulação Multi-Corpos de Alta Fidelidade
 
-![Status da Fase 1](https://img.shields.io/badge/Fase%201-Concluída%20%26%20Validada-brightgreen)
+![Status da Fase](https://img.shields.io/badge/Fase%203-Concluída-blueviolet)
 ![Plataforma](https://img.shields.io/badge/Plataforma-MATLAB%20%26%20Simulink-blue)
-
 
 ## 🎯 Visão Geral do Projeto
 
@@ -16,11 +15,12 @@ O projeto serve como um estudo aprofundado dos princípios da física veicular e
 * **Controle de Versão:** Git, GitHub
 * **Conceitos de Dinâmica Veicular:**
     * Sistemas de Coordenadas SAE J670e
-    * Modelo Bicicleta (3-DOF)
-    * **Magic Formula de Pacejka**
-    * **Saturação de Pneu**
+    * Modelo Bicicleta (3-DOF) -> **Modelo com Rolagem (4-DOF)**
+    * **Dinâmica de Rolagem (Roll)**
+    * **Transferência de Carga Lateral**
+    * Magic Formula de Pacejka
+    * Saturação de Pneu
     * Dirigibilidade: Subesterço (Understeer) e Sobre-esterço (Oversteer)
-    * Ganho de Taxa de Guinada (Yaw Rate Gain)
 
 ## 📁 Estrutura do Projeto
 
@@ -42,43 +42,38 @@ O desenvolvimento segue um plano incremental:
 -   [x] **Fase 0: A Fundação** - Preparação do ambiente e revisão teórica.
 -   [x] **Fase 1: O Modelo Bicicleta (3-DOF)** - Implementação e validação do modelo linear.
 -   [x] **Fase 2: Introduzindo o Modelo de Pneu Não-Linear (Pacejka)** - Simulação do comportamento no limite da aderência.
--   [ ] **Fase 3: Adicionando a Dinâmica de Rolagem (Roll) e Transferência de Carga (4-DOF)**
+-   [x] **Fase 3: Adicionando a Dinâmica de Rolagem e Transferência de Carga (4-DOF)** - Modelagem da inclinação da carroceria e seu efeito nos pneus.
 -   [ ] **Fase 4: A Simulação Completa (7-DOF a 14-DOF)**
 -   [ ] **Fase 5: Análise e Visualização Final**
 
-## 📊 Resultados da Fase 1
+## 📊 Resultados
 
-A primeira fase do projeto foi concluída e validada com sucesso.
+### Fase 1 & 2: Validação dos Modelos Linear e Não-Linear
 
-### 1. Validação do Modelo: Resposta ao Degrau
+As fases iniciais validaram o comportamento de guinada do veículo e a implementação do modelo de pneu Pacejka, que captura corretamente o efeito de **saturação do pneu** (perda de ganho em manobras agressivas).
 
-Para verificar a estabilidade fundamental do modelo, uma simulação com entrada degrau no volante (`delta`) foi executada. O gráfico abaixo mostra a resposta da taxa de guinada (`r`) e da velocidade lateral (`vy`). A resposta oscilatória que se estabiliza em um valor de regime permanente confirma o comportamento estável de segunda ordem do sistema, como esperado pela teoria.
-
-> ![Resposta ao Degrau](03_Resultados/grafico_resposta_degrau.png)
-
-### 2. Análise de Característica de Dirigibilidade
-
-Uma ferramenta de análise foi desenvolvida em MATLAB para automatizar a execução do modelo Simulink em uma ampla faixa de velocidades (10 a 40 m/s). O script calcula o ganho de taxa de guinada em regime permanente e plota a curva característica do veículo.
-
-Após um processo iterativo de ajuste de parâmetros (distribuição de peso, rigidez dos pneus e momento de inércia), o modelo foi configurado para exibir um comportamento **subesterçante**, que é o padrão de segurança para veículos de passeio. O gráfico abaixo demonstra este comportamento, indicado pela queda do ganho em altas velocidades.
-
-> ![Característica Subesterçante](03_Resultados/grafico_final_subestercante.png)
-
-### Fase 2: Análise do Modelo Não-Linear (Pacejka)
-
-Para validar a implementação do modelo de pneu não-linear de Pacejka, duas simulações foram comparadas: uma com esterçamento de baixa amplitude (0.05 rad) e outra com alta amplitude (0.20 rad).
-
-O gráfico comparativo abaixo demonstra o efeito de **saturação do pneu**. Enquanto a entrada de esterçamento foi 4x maior, a resposta da taxa de guinada foi significativamente menor que 4x, provando que o ganho do sistema diminui em manobras agressivas. Isso confirma que o modelo agora captura corretamente o comportamento do veículo no limite da aderência.
-
+> **[NOTA: Substitua pelo seu gráfico comparativo da Fase 2]**
 > ![Saturação do Pneu](03_Resultados/grafico_fase2_saturacao.png)
 
-### 🚀 Como Executar a Simulação
+### Fase 3: Análise do Modelo com Rolagem e Transferência de Carga (4-DOF)
+
+Nesta fase, a dinâmica de rolagem foi adicionada, transformando o modelo em 4-DOF. A simulação de uma manobra de degrau no volante agora demonstra três comportamentos físicos interligados: a resposta de guinada, a inclinação da carroceria e a transferência de carga resultante sobre os pneus.
+
+O gráfico abaixo valida o modelo de 4-DOF:
+1.  **Taxa de Guinada:** O veículo entra em uma curva estável.
+2.  **Ângulo de Rolagem:** A carroceria se inclina para um ângulo fisicamente realista e se estabiliza.
+3.  **Carga Vertical:** O peso é claramente transferido dos pneus internos (FL, RL) para os externos (FR, RR), o que afeta a capacidade de aderência de cada pneu individualmente.
+
+> **[NOTA: Substitua pelo seu gráfico completo da Fase 3]**
+> ![Resultados da Fase 3](03_Resultados/grafico_fase3_completo.png)
+
+## 🚀 Como Executar a Simulação
 
 O projeto é executado através de scripts mestres que controlam cada análise.
 
 ## 🔮 Próximos Passos
 
-O próximo grande passo é a **Fase 3**, onde a dinâmica de rolagem (inclinação da carroceria) será adicionada ao modelo. Isso introduzirá o conceito de **transferência de carga lateral**, onde o peso é transferido para as rodas externas durante uma curva, alterando a capacidade de aderência de cada pneu em tempo real e aumentando ainda mais o realismo da simulação.
+O próximo grande passo é a **Fase 4**, onde a **dinâmica vertical** será integrada ao modelo. Isso envolve modelar as molas e amortecedores de cada suspensão, permitindo simular o comportamento do veículo em pistas irregulares e analisar o movimento de arfagem (pitch) durante acelerações e frenagens.
 
 ## 📚 Referências
 
