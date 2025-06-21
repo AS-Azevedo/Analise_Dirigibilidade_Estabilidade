@@ -3,11 +3,12 @@
 ![Status da Fase 1](https://img.shields.io/badge/Fase%201-Concluída%20%26%20Validada-brightgreen)
 ![Plataforma](https://img.shields.io/badge/Plataforma-MATLAB%20%26%20Simulink-blue)
 
+
 ## 🎯 Visão Geral do Projeto
 
 Este projeto de engenharia documenta o desenvolvimento de uma ferramenta de simulação de dinâmica veicular construída do zero em **MATLAB** e **Simulink**. O objetivo principal é analisar os fundamentos da dirigibilidade e estabilidade de um veículo, evoluindo de um modelo simples de 3 Graus de Liberdade (DOF) para um modelo de alta fidelidade de até 14-DOF.
 
-O projeto serve como um estudo aprofundado dos princípios da física veicular e como um portfólio prático de modelagem matemática, simulação de sistemas dinâmicos e resolução de problemas de engenharia. O processo incluiu um ciclo completo de desenvolvimento: da revisão teórica e implementação, passando por uma extensiva fase de depuração para corrigir instabilidades no modelo, até a validação final dos resultados contra a teoria estabelecida.
+O projeto serve como um estudo aprofundado dos princípios da física veicular e como um portfólio prático de modelagem matemática, simulação de sistemas dinâmicos e resolução de problemas de engenharia. O processo inclui um ciclo completo de desenvolvimento: da revisão teórica e implementação, passando por uma extensiva fase de depuração, até a validação final dos resultados contra a teoria estabelecida.
 
 ## 🛠️ Ferramentas e Conceitos Chave
 
@@ -16,8 +17,8 @@ O projeto serve como um estudo aprofundado dos princípios da física veicular e
 * **Conceitos de Dinâmica Veicular:**
     * Sistemas de Coordenadas SAE J670e
     * Modelo Bicicleta (3-DOF)
-    * Forças nos Pneus (Modelo Linear)
-    * Ângulo de Deriva (Slip Angle)
+    * **Magic Formula de Pacejka**
+    * **Saturação de Pneu**
     * Dirigibilidade: Subesterço (Understeer) e Sobre-esterço (Oversteer)
     * Ganho de Taxa de Guinada (Yaw Rate Gain)
 
@@ -39,8 +40,8 @@ O repositório está organizado de forma modular para garantir clareza e manuten
 O desenvolvimento segue um plano incremental:
 
 -   [x] **Fase 0: A Fundação** - Preparação do ambiente e revisão teórica.
--   [x] **Fase 1: O Modelo Bicicleta (3-DOF)** - Implementação, depuração e validação do modelo lateral linear.
--   [ ] **Fase 2: Introduzindo o Modelo de Pneu Não-Linear (Pacejka)**
+-   [x] **Fase 1: O Modelo Bicicleta (3-DOF)** - Implementação e validação do modelo linear.
+-   [x] **Fase 2: Introduzindo o Modelo de Pneu Não-Linear (Pacejka)** - Simulação do comportamento no limite da aderência.
 -   [ ] **Fase 3: Adicionando a Dinâmica de Rolagem (Roll) e Transferência de Carga (4-DOF)**
 -   [ ] **Fase 4: A Simulação Completa (7-DOF a 14-DOF)**
 -   [ ] **Fase 5: Análise e Visualização Final**
@@ -63,15 +64,24 @@ Após um processo iterativo de ajuste de parâmetros (distribuição de peso, ri
 
 > ![Característica Subesterçante](03_Resultados/grafico_final_subestercante.png)
 
-## 🚀 Como Executar a Simulação
+### Fase 2: Análise do Modelo Não-Linear (Pacejka)
 
-O projeto é executado através de um script mestre que controla todo o processo.
+Para validar a implementação do modelo de pneu não-linear de Pacejka, duas simulações foram comparadas: uma com esterçamento de baixa amplitude (0.05 rad) e outra com alta amplitude (0.20 rad).
+
+O gráfico comparativo abaixo demonstra o efeito de **saturação do pneu**. Enquanto a entrada de esterçamento foi 4x maior, a resposta da taxa de guinada foi significativamente menor que 4x, provando que o ganho do sistema diminui em manobras agressivas. Isso confirma que o modelo agora captura corretamente o comportamento do veículo no limite da aderência.
+
+> ![Saturação do Pneu](03_Resultados/grafico_fase2_saturacao.png)
+
+### 🚀 Como Executar a Simulação
+
+O projeto é executado através de scripts mestres que controlam cada análise.
 
 ## 🔮 Próximos Passos
 
-O próximo grande passo é a **Fase 2**, que consiste em substituir o modelo de pneu linear por um modelo não-linear **"Magic Formula" de Pacejka**. Isso permitirá a simulação de manobras no limite de aderência e uma análise de estabilidade muito mais aprofundada.
+O próximo grande passo é a **Fase 3**, onde a dinâmica de rolagem (inclinação da carroceria) será adicionada ao modelo. Isso introduzirá o conceito de **transferência de carga lateral**, onde o peso é transferido para as rodas externas durante uma curva, alterando a capacidade de aderência de cada pneu em tempo real e aumentando ainda mais o realismo da simulação.
 
 ## 📚 Referências
 
 * Milliken, W. F., & Milliken, D. L. (1995). *Race Car Vehicle Dynamics*. SAE International.
 * Gillespie, T. D. (1992). *Fundamentals of Vehicle Dynamics*. SAE International.
+* Pacejka, H. B. (2006). *Tire and Vehicle Dynamics*. Elsevier.
