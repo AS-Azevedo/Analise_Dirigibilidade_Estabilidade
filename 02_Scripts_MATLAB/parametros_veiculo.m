@@ -6,7 +6,7 @@ clear all;
 clc;
 close all;
 
-fprintf('Carregando parâmetros de um veículo propositalmente subesterçante...\n');
+fprintf('Carregando parâmetros de um veículo\n');
 
 % --- Parâmetros Físicos ---
 m = 1500;       % Massa total do veículo (kg)
@@ -35,6 +35,19 @@ PneuTraseiro.E = 0.97;
 % (Já deve existir no seu script, mas confirme)
 Fz_f_static = m * g * b / L;
 Fz_r_static = m * g * a / L;
+
+% --- Parâmetros da Fase 3: Dinâmica de Rolagem ---
+ms = 1350;      % Massa suspensa (kg), um pouco menos que a massa total 'm'
+Ix = 600;       % Momento de inércia de rolagem (kg*m^2)
+h_rc = 0.4;     % Distância vertical do CG ao eixo de rolagem (m)
+K_phi_f = 40000;  % Rigidez de rolagem dianteira (N*m/rad)
+K_phi_r = 30000;  % Rigidez de rolagem traseira (N*m/rad)
+K_phi_total = K_phi_f + K_phi_r; % Rigidez total
+C_phi_f = 2000;   % Amortecimento de rolagem dianteiro (N*m*s/rad)
+C_phi_r = 1500;   % Amortecimento de rolagem traseiro (N*m*s/rad)
+C_phi_total = C_phi_f + C_phi_r; % Amortecimento total
+t_f = 1.5;      % Bitola (distância entre rodas) dianteira (m)
+t_r = 1.5;      % Bitola traseira (m)
 
 
 % --- Salvando os Parâmetros ---

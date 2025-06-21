@@ -1,78 +1,74 @@
-%% SCRIPT MESTRE PARA ANÁLISE DO MODELO PACEJKA (FASE 2)
-% Este script executa duas simulações para comparar a resposta do veículo
-% com pneus não-lineares sob diferentes amplitudes de esterçamento.
+%% SCRIPT MESTRE PARA ANÁLISE DO MODELO COM ROLAGEM (FASE 3)
+% Este script executa uma simulação do modelo de 4-DOF e analisa os
+% resultados de guinada, rolagem e transferência de carga.
 
 % --- 1. Preparação do Ambiente ---
 clear all; 
 clc;       
 close all; 
 
-fprintf('1. Carregando parâmetros do veículo (com coeficientes Pacejka)...\n');
-% Garante que os parâmetros estejam sempre atualizados antes de carregar
-% O script de parâmetros agora deve conter as structs 'PneuDianteiro' e 'PneuTraseiro'
+fprintf('1. Carregando parâmetros do veículo (Fase 3)...\n');
 run('parametros_veiculo.m'); 
 load('params_veiculo.mat'); 
 
-% --- 2. Configuração dos Testes ---
-fprintf('2. Configurando os cenários de teste...\n');
+% --- 2. Configuração da Simulação ---
+fprintf('2. Configurando o cenário de teste...\n');
 
-% Cenário 1: Esterçamento pequeno (deve se comportar de forma quase linear)
-delta_pequeno = 0.05; % ~2.8 graus
+model_name = 'modelo_roll_4dof';
+model_path = ['../01_Modelos_Simulink/' model_name];
 
-% Cenário 2: Esterçamento grande (deve mostrar saturação do pneu)
-delta_grande = 0.2;  % ~11.5 graus (4x maior que o pequeno)
-
-% Parâmetros de simulação (velocidade constante para este teste)
+% Condições do Teste (um degrau moderado para ver bem o efeito da rolagem)
 vx = 20; % m/s
+delta_input = 0.1; % rad (~5.7 graus)
 t_sim = 10; % segundos
 
-% --- 3. Execução das Simulações ---
-fprintf('3. Executando simulação com DELTA PEQUENO...\n');
-% Define a entrada do Step block para o valor pequeno
-delta_input = delta_pequeno;
-% Executa o novo modelo USANDO O CAMINHO RELATIVO
-out_pequeno = sim('../01_Modelos_Simulink/modelo_pacejka.slx', 'StopTime', num2str(t_sim));
+% --- 3. Execução da Simulação ---
+fprintf('3. Executando o modelo de 4-DOF...\n');
 
-fprintf('4. Executando simulação com DELTA GRANDE...\n');
-% Define a entrada do Step block para o valor grande
-delta_input = delta_grande;
-% Executa o novo modelo USANDO O CAMINHO RELATIVO
-out_grande = sim('../01_Modelos_Simulink/modelo_pacejka.slx', 'StopTime', num2str(t_sim));
+% Carrega o sistema na memória e depois executa a simulação
+load_system(model_path);
+out = sim(model_path, 'StopTime', num2str(t_sim));
 
-fprintf('5. Simulações concluídas!\n');
+fprintf('4. Simulação concluída!\n');
 
-% --- 4. Análise e Visualização Comparativa ---
-fprintf('6. Gerando gráfico comparativo...\n');
+% --- 4. Análise e Visualização dos Resultados ---
+fprintf('5. Gerando gráficos de análise da Fase 3...\n');
 
-% Extraindo os dados de cada simulação
-tempo_pequeno = out_pequeno.tout;
-r_pequeno = out_pequeno.r_sim.Data;
+% Extraindo os dados da estrutura de saída 'out'
+tempo = out.tout;
+taxa_guinada = out.r_sim.Data;
+angulo_rolagem = out.phi_sim.Data;
+cargas_pneus = out.Fz_sim.Data;
 
-tempo_grande = out_grande.tout;
-r_grande = out_grande.r_sim.Data;
+% Criando uma figura com múltiplos subplots
+figure('Name', 'Análise Completa da Manobra - Fase 3');
 
-% Plotando as duas respostas no mesmo gráfico
-figure('Name', 'Análise de Saturação do Pneu');
-hold on; % Permite plotar múltiplas curvas na mesma figura
-plot(tempo_pequeno, r_pequeno, 'b-', 'LineWidth', 2);
-plot(tempo_grande, r_grande, 'r-', 'LineWidth', 2);
-hold off;
-
-% Adicionando rótulos e legenda
-title('Comparação da Resposta de Guinada (Linear vs. Saturação)');
+% Subplot 1: Resposta da Taxa de Guinada
+subplot(3, 1, 1);
+plot(tempo, taxa_guinada, 'b-', 'LineWidth', 2);
+title('Resposta da Taxa de Guinada (r)');
 xlabel('Tempo (s)');
-ylabel('Taxa de Guinada (r) [rad/s]');
-legend( ...
-    sprintf('Delta Pequeno (%.2f rad)', delta_pequeno), ...
-    sprintf('Delta Grande (%.2f rad)', delta_grande) ...
-);
+ylabel('rad/s');
 grid on;
 
-% Análise Quantitativa
-ganho_linear_aproximado = max(abs(r_pequeno)) / delta_pequeno;
-ganho_saturado = max(abs(r_grande)) / delta_grande;
+% Subplot 2: Resposta da Rolagem
+subplot(3, 1, 2);
+plot(tempo, angulo_rolagem * (180/pi), 'r-', 'LineWidth', 2); % Convertido para graus para fácil leitura
+title('Ângulo de Rolagem da Carroceria (\phi)');
+xlabel('Tempo (s)');
+ylabel('Graus');
+grid on;
 
-fprintf('\n--- Análise de Ganhos ---\n');
-fprintf('Ganho Aparente (regime linear): %.2f\n', ganho_linear_aproximado);
-fprintf('Ganho Aparente (regime saturado): %.2f\n', ganho_saturado);
-fprintf('Se o ganho saturado for menor, a não-linearidade foi comprovada!\n');
+% Subplot 3: Transferência de Carga
+subplot(3, 1, 3);
+plot(tempo, cargas_pneus / 1000, 'LineWidth', 2); % Dividido por 1000 para ver em kN
+title('Carga Vertical Dinâmica nos Pneus (Fz)');
+xlabel('Tempo (s)');
+ylabel('Carga (kN)');
+legend('Diant. Esq. (FL)', 'Diant. Dir. (FR)', 'Tras. Esq. (RL)', 'Tras. Dir. (RR)');
+grid on;
+
+fprintf('Análise finalizada.\n');
+
+% Opcional: Abrir o Scope para visualização interna
+% open_system([model_name '/Scope']); % Descomente se quiser abrir um Scope específico
