@@ -49,6 +49,15 @@ C_phi_total = C_phi_f + C_phi_r; % Amortecimento total
 t_f = 1.5;      % Bitola (distância entre rodas) dianteira (m)
 t_r = 1.5;      % Bitola traseira (m)
 
+% --- Parâmetros da Fase 4: Dinâmica Vertical (Modelo 1/4 de Veículo) ---
+
+ms_q = m / 4;      % Massa suspensa por roda (kg) - 'q' de 'quarter'
+mus_q = 60;        % Massa não-suspensa por roda (kg)
+
+ks = 25000;        % Rigidez da mola da suspensão (N/m)
+cs = 2500;         % Coeficiente de amortecimento da suspensão (N*s/m)
+kt = 200000;       % Rigidez vertical do pneu (N/m)
+
 
 % --- Salvando os Parâmetros ---
 script_path = fileparts(mfilename('fullpath'));

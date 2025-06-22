@@ -1,4 +1,4 @@
-%% SCRIPT MESTRE PARA ANÁLISE DO MODELO COM ROLAGEM (FASE 3)
+s%% SCRIPT MESTRE PARA ANÁLISE DO MODELO COM ROLAGEM (FASE 3)
 % Este script executa uma simulação do modelo de 4-DOF e analisa os
 % resultados de guinada, rolagem e transferência de carga.
 
@@ -72,3 +72,4 @@ fprintf('Análise finalizada.\n');
 
 % Opcional: Abrir o Scope para visualização interna
 % open_system([model_name '/Scope']); % Descomente se quiser abrir um Scope específico
+
