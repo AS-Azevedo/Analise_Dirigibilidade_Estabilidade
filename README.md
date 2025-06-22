@@ -1,6 +1,6 @@
 # Análise de Dirigibilidade e Estabilidade Veicular Através de Simulação Multi-Corpos de Alta Fidelidade
 
-![Status da Fase](https://img.shields.io/badge/Fase%203-Concluída-blueviolet)
+![Status da Fase](https://img.shields.io/badge/Fase%204-Concluída-blue)
 ![Plataforma](https://img.shields.io/badge/Plataforma-MATLAB%20%26%20Simulink-blue)
 
 ## 🎯 Visão Geral do Projeto
@@ -15,12 +15,12 @@ O projeto serve como um estudo aprofundado dos princípios da física veicular e
 * **Controle de Versão:** Git, GitHub
 * **Conceitos de Dinâmica Veicular:**
     * Sistemas de Coordenadas SAE J670e
-    * Modelo Bicicleta (3-DOF) -> **Modelo com Rolagem (4-DOF)**
-    * **Dinâmica de Rolagem (Roll)**
-    * **Transferência de Carga Lateral**
+    * Modelo Bicicleta (3-DOF)
+    * **Modelo de 1/4 de Veículo (2-DOF)**
+    * **Modelo de Veículo Completo (8-DOF)**
+    * Dinâmica de Rolagem (Roll), Arfagem (Pitch) e Guinada (Yaw)
+    * Transferência de Carga Lateral
     * Magic Formula de Pacejka
-    * Saturação de Pneu
-    * Dirigibilidade: Subesterço (Understeer) e Sobre-esterço (Oversteer)
 
 ## 📁 Estrutura do Projeto
 
@@ -40,32 +40,27 @@ O repositório está organizado de forma modular para garantir clareza e manuten
 O desenvolvimento segue um plano incremental:
 
 -   [x] **Fase 0: A Fundação** - Preparação do ambiente e revisão teórica.
--   [x] **Fase 1: O Modelo Bicicleta (3-DOF)** - Implementação e validação do modelo linear.
--   [x] **Fase 2: Introduzindo o Modelo de Pneu Não-Linear (Pacejka)** - Simulação do comportamento no limite da aderência.
--   [x] **Fase 3: Adicionando a Dinâmica de Rolagem e Transferência de Carga (4-DOF)** - Modelagem da inclinação da carroceria e seu efeito nos pneus.
--   [ ] **Fase 4: A Simulação Completa (7-DOF a 14-DOF)**
+-   [x] **Fase 1: O Modelo Bicicleta (3-DOF)** - Validação do modelo lateral linear.
+-   [x] **Fase 2: Modelo de Pneu Não-Linear (Pacejka)** - Simulação no limite da aderência.
+-   [x] **Fase 3: Dinâmica de Rolagem e Transferência de Carga (4-DOF)** - Modelagem da inclinação da carroceria.
+-   [x] **Fase 4: A Simulação Completa (8-DOF)** - Integração das dinâmicas verticais, de rolagem e arfagem.
 -   [ ] **Fase 5: Análise e Visualização Final**
 
 ## 📊 Resultados
 
-### Fase 1 & 2: Validação dos Modelos Linear e Não-Linear
+### Fase 1-3: Evolução do Modelo de Dirigibilidade
 
-As fases iniciais validaram o comportamento de guinada do veículo e a implementação do modelo de pneu Pacejka, que captura corretamente o efeito de **saturação do pneu** (perda de ganho em manobras agressivas).
+As fases iniciais validaram a dinâmica lateral, de guinada e de rolagem do veículo. A implementação do modelo de pneu Pacejka (Fase 2) e da transferência de carga (Fase 3) permitiu a simulação realista de manobras, capturando efeitos como a saturação dos pneus e a inclinação da carroceria.
 
-> **[NOTA: Substitua pelo seu gráfico comparativo da Fase 2]**
-> ![Saturação do Pneu](03_Resultados/grafico_fase2_saturacao.png)
+### Fase 4: Simulação do Veículo Completo (Modelo 8-DOF)
 
-### Fase 3: Análise do Modelo com Rolagem e Transferência de Carga (4-DOF)
+Nesta fase, a dinâmica vertical foi integrada ao modelo. Seguindo uma abordagem de "isolar e integrar", um modelo de 1/4 de veículo foi primeiramente validado e depois encapsulado em quatro subsistemas de suspensão. Estes foram acoplados ao modelo de chassi, que foi expandido para incluir o grau de liberdade de arfagem (pitch).
 
-Nesta fase, a dinâmica de rolagem foi adicionada, transformando o modelo em 4-DOF. A simulação de uma manobra de degrau no volante agora demonstra três comportamentos físicos interligados: a resposta de guinada, a inclinação da carroceria e a transferência de carga resultante sobre os pneus.
+O modelo final de 8-DOF foi validado com um teste de passagem por obstáculo em uma única roda. Os resultados abaixo demonstram a resposta 3D completa e acoplada do chassi:
+1.  **Atitude do Chassi:** O gráfico mostra as respostas de rolagem (`phi`) e arfagem (`theta`) do chassi. Quando a roda dianteira direita sobe, o carro inclina para a esquerda (rolagem negativa) e o nariz levanta (arfagem positiva), como esperado.
+2.  **Dinâmica da Suspensão:** O segundo gráfico mostra a compressão da mola e do amortecedor, ilustrando como a suspensão absorve o impacto para suavizar o movimento da carroceria.
 
-O gráfico abaixo valida o modelo de 4-DOF:
-1.  **Taxa de Guinada:** O veículo entra em uma curva estável.
-2.  **Ângulo de Rolagem:** A carroceria se inclina para um ângulo fisicamente realista e se estabiliza.
-3.  **Carga Vertical:** O peso é claramente transferido dos pneus internos (FL, RL) para os externos (FR, RR), o que afeta a capacidade de aderência de cada pneu individualmente.
-
-> **[NOTA: Substitua pelo seu gráfico completo da Fase 3]**
-> ![Resultados da Fase 3](03_Resultados/grafico_fase3_completo.png)
+> ![Resultados da Fase 4](03_Resultados/grafico_fase4_completo.png)
 
 ## 🚀 Como Executar a Simulação
 
@@ -73,7 +68,10 @@ O projeto é executado através de scripts mestres que controlam cada análise.
 
 ## 🔮 Próximos Passos
 
-O próximo grande passo é a **Fase 4**, onde a **dinâmica vertical** será integrada ao modelo. Isso envolve modelar as molas e amortecedores de cada suspensão, permitindo simular o comportamento do veículo em pistas irregulares e analisar o movimento de arfagem (pitch) durante acelerações e frenagens.
+Com o modelo de alta fidelidade construído e validado, a **Fase 5** se concentrará em utilizar esta ferramenta para:
+-   Criar scripts para simular manobras padrão da indústria (ex: Mudança de Faixa Dupla, Slalom).
+-   Gerar animações 3D com o **Simulink 3D Animation** para visualizar essas manobras.
+-   Finalizar a documentação e consolidar o projeto para o portfólio.
 
 ## 📚 Referências
 

@@ -58,6 +58,12 @@ ks = 25000;        % Rigidez da mola da suspensão (N/m)
 cs = 2500;         % Coeficiente de amortecimento da suspensão (N*s/m)
 kt = 200000;       % Rigidez vertical do pneu (N/m)
 
+% --- Parâmetros Adicionais para a Fase 4: Dinâmica de Arfagem ---
+Iy = 2500; % Momento de Inércia de Arfagem (Pitch) (kg*m^2)
+% Para este modelo, vamos assumir que não há rigidez ou amortecimento
+% passivo de arfagem. Eles serão gerados pelas suspensões.
+Cy_passive = 5000; % Amortecimento passivo de Arfagem (Pitch) (N*m*s/rad)
+
 
 % --- Salvando os Parâmetros ---
 script_path = fileparts(mfilename('fullpath'));
