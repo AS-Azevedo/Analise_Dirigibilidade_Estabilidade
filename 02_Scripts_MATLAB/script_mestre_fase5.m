@@ -8,8 +8,8 @@
 %   5. Executa o modelo de cenário do Simulink.
 %   6. Gera uma animação quadro a quadro dos principais resultados gráficos.
 %
-% Autor: [Seu Nome]
-% Data: [Data de Hoje]
+% Autor: Anderson Azevedo
+% Data: 23/06/2025
 % =========================================================================
 
 %% --- 1. PREPARAÇÃO DO AMBIENTE ---

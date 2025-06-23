@@ -36,7 +36,7 @@ Para entender a física por trás da animação, os principais estados do veícu
     * Transferência de Carga Lateral
     * Análise de Dirigibilidade (Subesterço/Understeer)
 
-## 챌린지 Desafios e Aprendizados
+## Desafios e Aprendizados
 
 Durante o desenvolvimento, vários desafios técnicos foram superados, consolidando o aprendizado:
 * **Depuração de Instabilidade Numérica:** O modelo inicialmente apresentou instabilidades, que foram resolvidas através de uma depuração sistemática, corrigindo erros de sinal nos loops de feedback (Ação e Reação) e adicionando amortecimento passivo para estabilizar o solver.
