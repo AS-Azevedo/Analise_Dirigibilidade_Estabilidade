@@ -2,8 +2,6 @@
 % Este script define as características de um veículo exageradamente subesterçante
 % para validar a estrutura do modelo Simulink.
 
-clear all;
-clc;
 close all;
 
 fprintf('Carregando parâmetros de um veículo\n');
@@ -63,6 +61,10 @@ Iy = 2500; % Momento de Inércia de Arfagem (Pitch) (kg*m^2)
 % Para este modelo, vamos assumir que não há rigidez ou amortecimento
 % passivo de arfagem. Eles serão gerados pelas suspensões.
 Cy_passive = 5000; % Amortecimento passivo de Arfagem (Pitch) (N*m*s/rad)
+
+% --- Definição do Objeto Bus para a Pose 6-DOF ---
+% Este bloco de código cria uma estrutura de dados formal para a saída de pose.
+
 
 
 % --- Salvando os Parâmetros ---
