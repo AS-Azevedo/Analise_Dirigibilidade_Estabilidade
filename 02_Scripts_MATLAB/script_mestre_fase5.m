@@ -9,7 +9,7 @@
 %   6. Gera uma animação quadro a quadro dos principais resultados gráficos.
 %
 % Autor: Anderson Azevedo
-% Data: 23/06/2025
+% Data: 23/06/2025  
 % =========================================================================
 
 %% --- 1. PREPARAÇÃO DO AMBIENTE ---
@@ -125,7 +125,7 @@ set(gca, 'Color', [0.1 0.1 0.1], 'XColor', 'w', 'YColor', 'w');
 ylim([min(susp_cm)-5 max(susp_cm)+5]); % Trava o eixo Y
 
 % --- O Loop de Animação ---
-for i = 1:300:length(tempo) % Pula de 20 em 20 frames para a animação ser rápida
+for i = 1:300:length(tempo) % Pula de 300 em 300 frames para a animação ser rápida
     % Atualiza os dados de cada gráfico até o frame 'i' de forma eficiente
     set(h_trajetoria, 'XData', Y_pos(1:i), 'YData', X_pos(1:i));
     set(h_carro, 'XData', Y_pos(i), 'YData', X_pos(i));
