@@ -10,7 +10,7 @@
 %   6. (Opcional) Plota gráficos 2D para análise técnica.
 %
 % Autor: Anderson Azevedo
-% Data: 22/06/2025
+% Data: [22/06/2025]
 % =========================================================================
 
 
@@ -61,3 +61,51 @@ if ~exist(params_script_name, 'file')
     error("Script de parâmetros '%s' não encontrado.", params_script_name);
 end
 % Executa o script para carregar m, Iz, ks, etc. no workspace
+run(params_script_name); 
+
+
+%% --- 4. DEFINIÇÃO DA MANOBRA E CONDIÇÕES DE TESTE ---
+fprintf('4. Configurando a manobra: Obstáculo em 1 roda...\n');
+
+% Condições da Simulação
+t_sim = 5;       % [s] Tempo total de simulação
+
+% Condições do Veículo e do Piloto
+% Estas variáveis são usadas como parâmetros pelos blocos DENTRO do modelo de cenário
+vx = 15;          % [m/s] Velocidade longitudinal constante
+delta_steer = 0;  % [rad] O carro segue em linha reta
+t_steer = 1;      % [s] (Não usado no teste de obstáculo, mas definido)
+
+% Condições da Pista: Apenas a roda dianteira direita (FR) passa por um obstáculo
+z_pista_FL = 0;   % [m]
+z_pista_FR = 0.1; % [m] A roda FR passa por um degrau de 10cm
+z_pista_RL = 0;   % [m]
+z_pista_RR = 0;   % [m]
+t_obstaculo = 1;  % [s] Instante em que o obstáculo aparece na pista
+
+
+%% --- 5. EXECUÇÃO DO CENÁRIO DE SIMULAÇÃO 3D ---
+fprintf('5. Executando o cenário de simulação 3D...\n');
+
+% Define o nome do modelo de CENÁRIO a ser executado
+model_name = 'cenario_animacao_3d'; 
+
+% Executa a simulação
+% O Simulink usará todas as variáveis que criamos acima
+out = sim(model_name, 'StopTime', num2str(t_sim));
+
+fprintf('6. SIMULAÇÃO CONCLUÍDA COM SUCESSO!\n');
+
+
+%% --- 6.PÓS-PROCESSAMENTO E PLOTS 2D ---
+
+
+tempo = out.tout;
+angulo_rolagem = out.phi_out.Data * (180/pi); % Supondo que você criou uma saída 'phi_out'
+ 
+figure;
+plot(tempo, angulo_rolagem);
+title('Ângulo de Rolagem Durante a Manobra');
+xlabel('Tempo (s)');
+ylabel('Rolagem (Graus)');
+grid on;
