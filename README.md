@@ -23,7 +23,6 @@ A animação abaixo foi gerada conectando a saída de pose 6-DOF do modelo Simul
 
 Para entender a física por trás da animação, os principais estados do veículo foram plotados e animados de forma sincronizada. O gráfico mostra a trajetória do veículo, a atitude do chassi (rolagem e arfagem), o ângulo de guinada e o deslocamento da suspensão que passou pelo obstáculo.
 
-> **[NOTA: Insira seu GIF da animação dos gráficos aqui. Grave a janela da figura do MATLAB com o OBS/Game Bar e converta para GIF.]**
 > ![Animação dos Gráficos](03_Resultados/animacao_graficos_2d.gif)
 
 ## 🛠️ Ferramentas e Conceitos Chave
